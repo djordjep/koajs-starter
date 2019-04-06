@@ -1,9 +1,12 @@
 const Router = require('koa2-router');
 const router = new Router();
-const API = new Router();
-const customers = require('./cusromers');
+const api = new Router();
 
-router.use('/api', API);
-API.use('/customers', customers);
+const customer = require('./cusromer');
+const product = require('./product');
+
+router.use('/api', api);
+api.use('/customer', customer);
+api.use('/product', product);
 
 module.exports = router;

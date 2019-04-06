@@ -1,0 +1,1 @@
+generate models: sequelize-auto -h localhost -d turing_challenge -u root -x turing  --dialect mysql -o /app/turing-backend-challenge/model -C
