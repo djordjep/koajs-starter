@@ -6,7 +6,7 @@ const customer = require('./cusromer');
 const product = require('./product');
 
 router.use('/api', api);
-api.use('/customer', customer);
+api.use('/customers', customer);
 api.use('/product', product);
 
 module.exports = router;

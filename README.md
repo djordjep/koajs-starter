@@ -2,3 +2,5 @@
 Backend challenge for Turing.com
 
 models generated with: https://github.com/sequelize/sequelize-auto
+
+sequelize model validation methods: https://github.com/chriso/validator.js

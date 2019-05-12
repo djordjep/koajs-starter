@@ -2,6 +2,7 @@ const Router = require('koa2-router');
 const router = new Router();
 const customerDomain = require('../domain/customers');
 const paramValidation = require('./param_validation');
+const passport = require('koa-passport');
 
 // router param validation
 router.param('customerId', async (ctx, next, param, key) => {
@@ -9,14 +10,14 @@ router.param('customerId', async (ctx, next, param, key) => {
     await next();
 })
 
-router.post('/', customerDomain.post);
+router.post('/', customerDomain.register);
+router.post('/login', customerDomain.signIn);
+router.post('/facebook', customerDomain.facebookSignin);
 
 router.get('/', customerDomain.get);
-;
-router.get('/:customerId', customerDomain.getBy);
 
-router.put('/:customerId', customerDomain.put);
-
-router.delete('/:customerId', customerDomain.delete);
+router.put('/', passport.authenticate('jwt', { session: false }), customerDomain.updateCustomer);
+router.put('/address', customerDomain.updateAdress);
+router.put('/creditCard', customerDomain.updateCreditCard);
 
 module.exports = router;
