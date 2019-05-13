@@ -1,5 +1,5 @@
 # KoaJs backend starter
-Backend strter,
+Backend starter,
 done:
 * routing
 * authorization
