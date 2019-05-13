@@ -5,10 +5,16 @@ done:
 * authorization
 * error handeling WIP
 * ORM with sequelize
+* validation WIP
 
 TODO:
 * rbac with route strategies
 * logging
+* versioning
+* API - documentation
+* Hypermedia controls
+* content negotiation trough http headers
+
 
 
 
