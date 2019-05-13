@@ -1,5 +1,16 @@
-# turing-backend-challenge
-Backend challenge for Turing.com
+# KoaJs backend starter
+Backend strter,
+done:
+* routing
+* authorization
+* error handeling WIP
+* ORM with sequelize
+
+TODO:
+* rbac with route strategies
+* logging
+
+
 
 models generated with: https://github.com/sequelize/sequelize-auto
 
