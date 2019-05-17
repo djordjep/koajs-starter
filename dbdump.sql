@@ -139,6 +139,38 @@ CREATE TABLE `customer` (
   KEY `idx_customer_shipping_region_id` (`shipping_region_id`)
 ) ENGINE=MyISAM;
 
+-- Create user table
+CREATE TABLE `user` (
+  `user_id`        INT           NOT NULL AUTO_INCREMENT,
+  `name`               VARCHAR(50)   NOT NULL,
+  `email`              VARCHAR(100)  NOT NULL,
+  `password`           VARCHAR(256)   NOT NULL,
+  PRIMARY KEY  (`user_id`),
+  UNIQUE KEY `idx_user_email` (`email`)
+) ENGINE=MyISAM;
+
+-- Create role table
+CREATE TABLE `role` (
+  `role_id`        INT           NOT NULL AUTO_INCREMENT,
+  `name`               VARCHAR(50)   NOT NULL,
+  PRIMARY KEY  (`role_id`),
+  UNIQUE KEY `idx_role_name` (`name`)
+) ENGINE=MyISAM;
+
+-- Create users_roles table
+CREATE TABLE `users_roles` (
+  `users_roles_id`        INT           NOT NULL AUTO_INCREMENT,
+  `user_id`               INT   NOT NULL,
+  `role_id`               INT   NOT NULL,
+  PRIMARY KEY  (`users_roles_id`),
+  FOREIGN KEY `idx_user_id` (`user_id`)
+        REFERENCES user (`user_id`)
+        ON DELETE CASCADE,
+  FOREIGN KEY `idx_role_id` (`role_id`)
+        REFERENCES role (`role_id`)
+        ON DELETE RESTRICT
+) ENGINE=MyISAM;
+
 -- Create shipping table
 CREATE TABLE `shipping` (
   `shipping_id`        INT            NOT NULL AUTO_INCREMENT,
@@ -186,6 +218,14 @@ INSERT INTO `department` (`department_id`, `name`, `description`) VALUES
        (1, 'Regional', 'Proud of your country? Wear a T-shirt with a national symbol stamp!'),
        (2, 'Nature', 'Find beautiful T-shirts with animals and flowers in our Nature department!'),
        (3, 'Seasonal', 'Each time of the year has a special flavor. Our seasonal T-shirts express traditional symbols using unique postal stamp pictures.');
+
+-- Populate role table
+INSERT INTO `role` (`role_id`, `name`) VALUES
+       (1, 'SuperAdmin'),
+       (2, 'Admin'),
+       (3, 'ElevatedUser'),
+       (4, 'User'),
+       (5, 'Anonimus');
 
 -- Populate category table
 INSERT INTO `category` (`category_id`, `department_id`, `name`, `description`) VALUES
@@ -356,6 +396,24 @@ INSERT INTO `tax` (`tax_id`, `tax_type`, `tax_percentage`) VALUES
 
 -- Change DELIMITER to $$
 DELIMITER $$
+
+-- Create user_get_user_info procedure
+CREATE PROCEDURE user_get_user_login_info(IN inUserEmail VARCHAR(256))
+BEGIN
+  SELECT   user_id, password
+  FROM     user
+  WHERE email = inUserEmail;
+END$$
+
+-- Create user_get_user_role stored procedure
+CREATE PROCEDURE user_get_user_role(IN inUserId INT)
+BEGIN
+  SELECT   name
+  FROM     role r
+  INNER JOIN users_roles ur
+      ON r.role_id = ur.role_id
+  WHERE ur.user_id = inUserId;
+END$$
 
 -- Create catalog_get_departments_list stored procedure
 CREATE PROCEDURE catalog_get_departments_list()

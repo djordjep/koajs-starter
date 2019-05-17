@@ -2,8 +2,11 @@ const Koa = require('koa');
 const app = new Koa();
 const koaBody = require('koa-body');
 const mainRouter = require('./routes/main');
-const passport = require('koa-passport')
+const passport = require('koa-passport');
 require('./services/auth');
+const casbin = require('casbin');
+const authz = require('koa-authz');
+const jwtAuthorizer = require('./rbac/jwtAuthorizer')
 
 // error handeling
 app.use(async (ctx, next) => {
@@ -36,7 +39,25 @@ app.use(async (ctx, next) => {
     ctx.set('X-Response-Time', `${ms}ms`);
 });
 
+// koa-passport
 app.use(passport.initialize());
+
+// rbac - koa-authz
+app.use(authz({
+    newEnforcer: async () => {
+        // load the casbin model and policy from files, database is also supported.
+        const enforcer = await casbin.newEnforcer('rbac/authz_model.conf', 'rbac/authz_policy.csv');
+        return enforcer;
+    },
+    authorizer: (ctx, option) => new jwtAuthorizer(ctx, option)
+}));
+
+// rbac - return forbiden if not authorized
+app.use(async (ctx, next) => {
+    if(ctx.status === 403) ctx.throw(403, 'Forbidden');
+    await next();
+});
+
 
 // use koa-body
 app.use(koaBody());

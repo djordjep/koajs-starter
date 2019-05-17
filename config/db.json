@@ -2,7 +2,7 @@
     "development": {
         "username": "root",
         "password": "turing",
-        "database": "turing_challenge",
+        "database": "turing",
         "host": "localhost",
         "dialect": "mysql"
     },

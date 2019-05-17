@@ -1,7 +1,6 @@
 /* jshint indent: 2 */
 
-module.exports = function (sequelize, DataTypes) {
-
+module.exports = function(sequelize, DataTypes) {
   return sequelize.define('customer', {
     customerId: {
       type: DataTypes.INTEGER(11),
@@ -19,16 +18,7 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING(100),
       allowNull: false,
       unique: true,
-      field: 'email',
-      validate: {
-        len: {
-          args: [6, 128],
-          msg: "Email address must be between 6 and 128 characters in length"
-        },
-        isEmail: {
-          msg: "Email address must be valid"
-        }
-      }
+      field: 'email'
     },
     password: {
       type: DataTypes.STRING(50),
@@ -92,10 +82,6 @@ module.exports = function (sequelize, DataTypes) {
       field: 'mob_phone'
     }
   }, {
-      tableName: 'customer',
-      timestamps: false,
-      defaultScope: {
-        attributes: { exclude: ['password'] },
-      }
-    });
+    tableName: 'customer'
+  });
 };

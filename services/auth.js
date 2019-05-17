@@ -1,6 +1,6 @@
-const passport = require('koa-passport')
-const bcrypt = require('bcrypt')
-const Customer = require('../domain/model_bootstrap')['models']['Customer'];
+const passport = require('koa-passport');
+const bcrypt = require('bcrypt');
+const User = require('../domain/model_bootstrap')['models']['User'];
 const sequelize = require('../domain/model_bootstrap')['sequelize'];
 
 const passportJWT = require("passport-jwt");
@@ -29,29 +29,45 @@ passport.use(new LocalStrategy({
 },
     async (username, password, done) => {
         try {
-            var customerarr = await sequelize
-                .query('CALL customer_get_login_info (:email)',
+            var userRawArr = await sequelize
+                .query('CALL user_get_user_login_info (:email)',
                     { replacements: { email: username }, type: sequelize.QueryTypes.RAW });
         } catch (error) {
-            console.error(error);
+            done(error, null);
         }
 
-        const customer = JSON.parse(JSON.stringify(customerarr[0]));
+        const userbyEmail = JSON.parse(JSON.stringify(userRawArr[0]));
 
-        if (customer) {
-            bcrypt.compare(password, customer.password, async (error, response) => {
-                if (response) {
-                    // if loggin passes we will put customer model in jwt
-                    const customerModel = await Customer.findOne({
-                        where: {
-                            customer_id: customer.customer_id
-                        }
-                    });
-                    done(null, customerModel)
-                } else {
-                    done(null, false)
-                }
-            });
+        if (userbyEmail) {
+            const validPassword = await bcrypt.compare(password, userbyEmail.password);
+            
+            if (!validPassword) done(null, false);
+            
+            // if loggin passes we will put customer model along with role in jwt
+            try {
+                var userModel = await User.findOne({
+                    where: {
+                        user_id: userbyEmail.user_id
+                    }
+                });
+            } catch (error) {
+                done(error, null);
+            }
+            
+            try {
+                var userRoleRaw = await sequelize
+                    .query('CALL user_get_user_role (:userId)',
+                        { replacements: { userId: userModel.get('userId') }, type: sequelize.QueryTypes.RAW});
+            } catch (error) {
+                done(error, null);
+            }
+            
+            const userRole = JSON.parse(JSON.stringify(userRoleRaw));
+
+            const userWithRole = Object.assign(userModel.get({ plain: true }), { role: userRole[0].name});
+            
+            done(null, userWithRole)
+           
         } else {
             done(null, false)
         }

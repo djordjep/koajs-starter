@@ -7,6 +7,8 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
     dialect: config.dialect
 });
 
+const User = require('../model/user')(sequelize, Sequelize.DataTypes);
+const UsersRoles = require('../model/users_roles')(sequelize, Sequelize.DataTypes);
 const Customer = require('../model/customer')(sequelize, Sequelize.DataTypes);
 const Order = require('../model/orders')(sequelize, Sequelize.DataTypes);
 const Product = require('../model/product')(sequelize, Sequelize.DataTypes);
@@ -18,7 +20,9 @@ const db = {
     "models": {
         Customer,
         Order,
-        Product
+        Product,
+        User,
+        UsersRoles
     }
 }
 
