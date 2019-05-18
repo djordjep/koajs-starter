@@ -42,7 +42,7 @@ app.use(async (ctx, next) => {
 // koa-passport
 app.use(passport.initialize());
 
-// rbac - koa-authz
+// rbac - koa-authz ONLY SETS STATUS CODE
 app.use(authz({
     newEnforcer: async () => {
         // load the casbin model and policy from files, database is also supported.
@@ -52,7 +52,7 @@ app.use(authz({
     authorizer: (ctx, option) => new jwtAuthorizer(ctx, option)
 }));
 
-// rbac - return forbiden if not authorized
+// rbac - return RESPONSE forbiden if STATUS CODE IS 403 SET BY koa-autz
 app.use(async (ctx, next) => {
     if(ctx.status === 403) ctx.throw(403, 'Forbidden');
     await next();

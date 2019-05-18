@@ -1,3 +1,5 @@
+p, SuperAdmin, *, *
+p, Admin, /api/*, *
 p, Anonymous, /api/users, POST
 p, Anonymous, /api/users/login, POST
 p, bob, /dataset2/resource1, *
