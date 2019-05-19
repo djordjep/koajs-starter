@@ -14,6 +14,7 @@ TODO:
 * API - documentation
 * Hypermedia controls
 * content negotiation trough http headers
+* tests
 
 
 models generated with: https://github.com/sequelize/sequelize-auto
