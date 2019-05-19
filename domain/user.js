@@ -76,9 +76,10 @@ const user = {
         ctx.body = `hello customer`
     },
     get: async ctx => {
+        // rolae based response strategy
         if (ctx.state.user.role === 'User') return getSelf(ctx);
         if (ctx.state.user.role === 'Admin' || 'SuperAdmin') return getAll(ctx);
-        console.log("Tralalalalalalalalalal");
+        
         const { originalUrl: path, method } = ctx;
         ctx.throw(409, `No response strategy for role: ${ctx.state.user.role}, on endpoint: ${path}, method: ${method}`);
     },
