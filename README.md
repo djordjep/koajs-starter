@@ -1,4 +1,4 @@
-# KoaJs backend starter
+# KoaJs REST API starter
 Backend starter,
 done:
 * routing
