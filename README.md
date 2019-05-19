@@ -7,10 +7,10 @@ done:
 * ORM with sequelize
 * validation WIP
 * rbac with route strategies
+* versioning
 
 TODO:
 * logging
-* versioning
 * API - documentation
 * Hypermedia controls
 * content negotiation trough http headers
