@@ -52,6 +52,7 @@ module.exports = function(sequelize, DataTypes) {
       field: 'display'
     }
   }, {
-    tableName: 'product'
+    tableName: 'product',
+    timestamps: false,
   });
 };

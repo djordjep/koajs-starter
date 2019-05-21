@@ -7,6 +7,18 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
     dialect: config.dialect
 });
 
+// collection pagination helper,
+// @input ctx.request.query, shoul contain pageNum, itemsPerPage items
+const paginate = ({ pageNum, itemsPerPage }) => {
+    if(!pageNum) pageNum = 1;
+    if(!itemsPerPage) itemsPerPage = 25;
+
+    const offset = Number(pageNum - 1 ) * Number(itemsPerPage);
+    const limit =  Number(itemsPerPage);
+
+    return { offset, limit };
+}
+
 const User = require('../model/user')(sequelize, Sequelize.DataTypes);
 const UsersRoles = require('../model/users_roles')(sequelize, Sequelize.DataTypes);
 const Customer = require('../model/customer')(sequelize, Sequelize.DataTypes);
@@ -16,6 +28,7 @@ const Product = require('../model/product')(sequelize, Sequelize.DataTypes);
 const db = {
     "Sequelize": Sequelize,
     "sequelize": sequelize,
+    "paginate": paginate,
 
     "models": {
         Customer,

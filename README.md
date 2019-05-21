@@ -8,6 +8,7 @@ done:
 * validation WIP
 * rbac with route strategies
 * versioning
+* pagination
 
 TODO:
 * logging

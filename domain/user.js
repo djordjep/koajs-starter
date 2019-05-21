@@ -1,4 +1,5 @@
 const User = require('./model_bootstrap')['models']['User'];
+const paginate = require('./model_bootstrap')['paginate'];
 const UsersRoles = require('./model_bootstrap')['models']['UsersRoles'];
 const bcrypt = require('bcrypt');
 const passport = require('koa-passport');
@@ -13,7 +14,7 @@ const getSelf = async ctx => {
 
 const getAll = async ctx => {
     try {
-        var record = await User.findAll();
+        var record = await User.findAll(paginate(ctx.request.query));
     } catch (error) {
         // we catch validation errors here so status is 400
         error.status = 400;
