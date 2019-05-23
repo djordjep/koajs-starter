@@ -3,7 +3,7 @@ Backend starter,
 done:
 * routing
 * authorization
-* error handeling WIP
+* error handling WIP
 * ORM with sequelize
 * validation WIP
 * rbac with route strategies
