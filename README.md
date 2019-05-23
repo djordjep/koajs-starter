@@ -9,11 +9,11 @@ done:
 * rbac with route strategies
 * versioning
 * pagination
+* Hypermedia controls
 
 TODO:
 * logging
 * API - documentation
-* Hypermedia controls
 * content negotiation trough http headers
 * tests
 
