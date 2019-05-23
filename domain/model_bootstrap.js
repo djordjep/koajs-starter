@@ -8,16 +8,16 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 });
 
 // collection pagination helper,
-// @input ctx.request.query, shoul contain pageNum, itemsPerPage items
-const paginate = ({ pageNum, itemsPerPage }) => {
-    if(!pageNum) pageNum = 1;
+// @input ctx.request.query, should contain page, itemsPerPage items
+const paginate = ({ page, itemsPerPage }) => {
+    if (!page) page = 1;
     if(!itemsPerPage) itemsPerPage = 25;
 
-    const offset = Number(pageNum - 1 ) * Number(itemsPerPage);
+    const offset = Number(page - 1 ) * Number(itemsPerPage);
     const limit =  Number(itemsPerPage);
 
     return { offset, limit };
-}
+};
 
 const User = require('../model/user')(sequelize, Sequelize.DataTypes);
 const UsersRoles = require('../model/users_roles')(sequelize, Sequelize.DataTypes);
