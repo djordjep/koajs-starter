@@ -24,6 +24,15 @@ class jwtAuthorizer extends BasicAuthorizer {
 
         return role;
     }
+
+    // this is unchanged method except console.log for debugging
+    checkPermission() {
+        const { ctx, enforcer } = this;
+        const { originalUrl: path, method } = ctx;
+        const user = this.getUserName();
+        console.log({user, path, method});
+        return enforcer.enforce(user, path, method);
+    }
 }
 
 module.exports = jwtAuthorizer;

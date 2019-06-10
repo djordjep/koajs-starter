@@ -54,7 +54,9 @@ const user = {
             throw error;
         }
 
-        ctx.body = record[0];
+        let result = record[0].toJSON();
+        delete result.password;
+        ctx.body = result;
     },
     signIn: ctx => {
         if (!ctx.request.body.email || !ctx.request.body.password) ctx.throw(400, `Parameters <email> and <password> must be provided.`);
@@ -79,12 +81,11 @@ const user = {
     get: async ctx => {
         // rolae based response strategy
         if (ctx.state.user.role === 'User') return getSelf(ctx);
-        if (ctx.state.user.role === 'Admin' || 'SuperAdmin') return getAll(ctx);
+        if (ctx.state.user.role === 'Admin' || ctx.state.user.role === 'SuperAdmin') return getAll(ctx);
         
         const { originalUrl: path, method } = ctx;
         ctx.throw(409, `No response strategy for role: ${ctx.state.user.role}, on endpoint: ${path}, method: ${method}`);
     },
-    updateCustomer: ctx => ctx.body = ctx,
 };
 
 module.exports = user;

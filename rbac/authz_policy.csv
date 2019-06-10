@@ -2,10 +2,8 @@ p, SuperAdmin, *, *
 p, Admin, /api/*, *
 p, Anonymous, /api/users, POST
 p, Anonymous, /api/users/login, POST
-p, Anonymous, /api/*/users, POST
-p, Anonymous, /api/*/users/login, POST
-p, bob, /dataset2/resource1, *
-p, bob, /dataset2/folder1/*, POST
-p, dataset1_admin, /dataset1/*, *
+p, Anonymous, /api/v1/users, POST
+p, Anonymous, /api/v1/users/login, POST
+p, Anonymous, /api/products, GET
+p, Anonymous, /api/v1/products, GET
 p, User, /api/users, GET
-g, cathy, dataset1_admin

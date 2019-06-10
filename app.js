@@ -14,6 +14,7 @@ app.use(async (ctx, next) => {
         await next();
     } catch (err) {
         ctx.status = err.status || 500;
+        ctx.set('Content-Type', `application/json`);
         ctx.body = `{"status": ${err.status}, "message": "${err.message}"}`;
         ctx.app.emit('error', err, ctx);
     }
@@ -64,4 +65,6 @@ app.use(koaBody());
 // connect router
 app.use(mainRouter);
 
-app.listen(3000);
+const server = app.listen(3000);
+
+module.exports = server;

@@ -16,6 +16,6 @@ router.post('/facebook', userDomain.facebookSignin);
 
 router.get('/', userDomain.get);
 
-router.put('/', passport.authenticate('jwt', { session: false }), userDomain.updateCustomer);
+// router.put('/', passport.authenticate('jwt', { session: false }), userDomain.updateCustomer);
 
 module.exports = router;

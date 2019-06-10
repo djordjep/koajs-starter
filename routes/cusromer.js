@@ -21,7 +21,3 @@ router.put('/address', customerDomain.updateAdress);
 router.put('/creditCard', customerDomain.updateCreditCard);
 
 module.exports = router;
-
-// make roles table and users roles pivot table, store role in users roles, get role on auth and put it in JWT, rbac would be on the routes and
-// role based entity filterring should be on some methods like get users for "user" role should return self,
-// for "admin" should return all users collection
