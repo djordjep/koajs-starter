@@ -10,12 +10,13 @@ done:
 * versioning
 * pagination
 * Hypermedia controls
+* WIP tests
 
 TODO:
 * logging
 * API - documentation
 * content negotiation trough http headers
-* tests
+
 
 
 models generated with: https://github.com/sequelize/sequelize-auto
