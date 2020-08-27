@@ -4,7 +4,7 @@
   "description": "backend challenge for turing.com",
   "main": "app.js",
   "dependencies": {
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "casbin": "^2.0.4",
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.7.0",
